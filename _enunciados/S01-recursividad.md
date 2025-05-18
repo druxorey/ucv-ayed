@@ -4,25 +4,25 @@
 
 Describa el concepto de recursividad. ¿Qué significan los niveles de recursividad?
 
-**Respuesta: [E01-concepto-recursividad](../S03-estructuras-de-control-condicional/E01-concepto-recursividad.cpp)**
+**Respuesta: [E01-concepto-recursividad](../S01-recursividad/E01-concepto-recursividad.cpp)**
 
 ## **E02-ventajas-desventajas**:
 
 Enumere brevemente las ventajas y desventajas de la recursividad.
 
-**Respuesta: [E02-ventajas-desventajas](../S03-estructuras-de-control-condicional/E02-ventajas-desventajas.cpp)**
+**Respuesta: [E02-ventajas-desventajas](../S01-recursividad/E02-ventajas-desventajas.cpp)**
 
 ## **E03-pilas-recursividad**:
 
 Explique brevemente el funcionamiento de las pilas de recursividad y los ambientes recursivos.
 
-**Respuesta: [E03-pilas-recursividad](../S03-estructuras-de-control-condicional/E03-pilas-recursividad.cpp)**
+**Respuesta: [E03-pilas-recursividad](../S01-recursividad/E03-pilas-recursividad.cpp)**
 
 ## **E04-solucion-iterativa**:
 
 ¿Existen casos donde una solución iterativa es mejor que una solución recursiva para un mismo problema?
 
-**Respuesta: [E04-solucion-iterativa](../S03-estructuras-de-control-condicional/E04-solucion-iterativa.cpp)**
+**Respuesta: [E04-solucion-iterativa](../S01-recursividad/E04-solucion-iterativa.cpp)**
 
 ## **E05-combinatoria**:
 
@@ -38,7 +38,7 @@ Construya una función recursiva que calcule el valor de la combinatoria de 2 n�
 | `n=7, k=0` | `1`                               |
 
 
-**Respuesta: [E05-combinatoria](../S03-estructuras-de-control-condicional/E05-combinatoria.cpp)**
+**Respuesta: [E05-combinatoria](../S01-recursividad/E05-combinatoria.cpp)**
 
 ## **E06-fibonacci-recursivo**:
 
@@ -54,7 +54,7 @@ Dado un número N, desarrolle una función recursiva que calcule la secuencia de
 | `N=1`     | `0`                                |
 
 
-**Respuesta: [E06-fibonacci-recursivo](../S03-estructuras-de-control-condicional/E06-fibonacci-recursivo.cpp)**
+**Respuesta: [E06-fibonacci-recursivo](../S01-recursividad/E06-fibonacci-recursivo.cpp)**
 
 ## **E07-conversion-a-binario**:
 
@@ -70,7 +70,7 @@ Dado un número entero positivo o nulo (en base decimal), construya un algoritmo
 | `N=16`    | `10000`                            |
 
 
-**Respuesta: [E07-conversion-a-binario](../S03-estructuras-de-control-condicional/E07-conversion-a-binario.cpp)**
+**Respuesta: [E07-conversion-a-binario](../S01-recursividad/E07-conversion-a-binario.cpp)**
 
 ## **E08-palabra-capicua**:
 
@@ -86,7 +86,7 @@ Elabore una función recursiva la cual dado un arreglo de caracteres que forman 
 | `arepera` | `Verdadero`                        |
 
 
-**Respuesta: [E08-palabra-capicua](../S03-estructuras-de-control-condicional/E08-palabra-capicua.cpp)**
+**Respuesta: [E08-palabra-capicua](../S01-recursividad/E08-palabra-capicua.cpp)**
 
 ## **E09-suma-de-naturales**:
 
@@ -102,7 +102,7 @@ Escriba un algoritmo recursivo que halle la suma de los primeros N números natu
 | `N=1`     | `1`                                |
 
 
-**Respuesta: [E09-suma-de-naturales](../S03-estructuras-de-control-condicional/E09-suma-de-naturales.cpp)**
+**Respuesta: [E09-suma-de-naturales](../S01-recursividad/E09-suma-de-naturales.cpp)**
 
 ## **E10-maximo-comun-divisor**:
 
@@ -118,7 +118,7 @@ Escriba una función recursiva para calcular el máximo común divisor (m.c.d.) 
 | `a=12, b=8`   | `4`                                |
 
 
-**Respuesta: [E10-maximo-comun-divisor](../S03-estructuras-de-control-condicional/E10-maximo-comun-divisor.cpp)**
+**Respuesta: [E10-maximo-comun-divisor](../S01-recursividad/E10-maximo-comun-divisor.cpp)**
 
 ## **E11-factorial-recursivo**:
 
@@ -134,7 +134,7 @@ Escriba una función recursiva para calcular el factorial de un número entero p
 | `n=0`     | `1`                                |
 
 
-**Respuesta: [E11-factorial-recursivo](../S03-estructuras-de-control-condicional/E11-factorial-recursivo.cpp)**
+**Respuesta: [E11-factorial-recursivo](../S01-recursividad/E11-factorial-recursivo.cpp)**
 
 ## **E12-potencia-real**:
 
@@ -150,7 +150,7 @@ Escriba una función recursiva para calcular la potencia de un número real elev
 | `x=7, n=1`    | `7`                                |
 
 
-**Respuesta: [E12-potencia-real](../S03-estructuras-de-control-condicional/E12-potencia-real.cpp)**
+**Respuesta: [E12-potencia-real](../S01-recursividad/E12-potencia-real.cpp)**
 
 ## **E13-arreglo-operaciones**:
 
@@ -171,7 +171,7 @@ Dado un arreglo de N números enteros, diseñar algoritmos recursivos que calcul
 | `[7, 7, 7]`           | `Mayor: 7, Suma: 21, Media: 7, Ordenado: Sí`  |
 
 
-**Respuesta: [E13-arreglo-operaciones](../S03-estructuras-de-control-condicional/E13-arreglo-operaciones.cpp)**
+**Respuesta: [E13-arreglo-operaciones](../S01-recursividad/E13-arreglo-operaciones.cpp)**
 
 ## **E14-busqueda-binaria**:
 
@@ -187,7 +187,7 @@ Elabore un algoritmo recursivo el cual dado un arreglo de enteros ordenado en fo
 | `Arreglo: [1, 2, 3], E=4`    | `No Existe`                  |
 
 
-**Respuesta: [E14-busqueda-binaria](../S03-estructuras-de-control-condicional/E14-busqueda-binaria.cpp)**
+**Respuesta: [E14-busqueda-binaria](../S01-recursividad/E14-busqueda-binaria.cpp)**
 
 ## **E15-ordenar-en-mezcla**:
 
@@ -203,7 +203,7 @@ Escribir un programa recursivo que ordene un arreglo de enteros por el método d
 | `[9, 5, 3, 7]`        | `[3, 5, 7, 9]`                     |
 
 
-**Respuesta: [E15-ordenar-en-mezcla](../S03-estructuras-de-control-condicional/E15-ordenar-en-mezcla.cpp)**
+**Respuesta: [E15-ordenar-en-mezcla](../S01-recursividad/E15-ordenar-en-mezcla.cpp)**
 
 ## **E16-invertir-digitos-recursivo**:
 
@@ -219,7 +219,7 @@ Escriba una función que invierta los dígitos de un número entero, empleando o
 | `100`     | `1`                                |
 
 
-**Respuesta: [E16-invertir-digitos-recursivo](../S03-estructuras-de-control-condicional/E16-invertir-digitos-recursivo.cpp)**
+**Respuesta: [E16-invertir-digitos-recursivo](../S01-recursividad/E16-invertir-digitos-recursivo.cpp)**
 
 ## **E17-multiplicacion-recursiva**:
 
@@ -235,7 +235,7 @@ Diseñe una función recursiva la cual, dados dos reales A y B, retorne como res
 | `A=10, B=3`   | `30`                               |
 
 
-**Respuesta: [E17-multiplicacion-recursiva](../S03-estructuras-de-control-condicional/E17-multiplicacion-recursiva.cpp)**
+**Respuesta: [E17-multiplicacion-recursiva](../S01-recursividad/E17-multiplicacion-recursiva.cpp)**
 
 ## **E18-paridad-recursiva**:
 
@@ -251,4 +251,4 @@ Desarrolle las funciones lógicas, mutuamente recursivas, EsPar y EsImpar, que s
 | `N=3`     | `EsPar: Falso, EsImpar: Verdadero` |
 
 
-**Respuesta: [E18-paridad-recursiva](../S03-estructuras-de-control-condicional/E18-paridad-recursiva.cpp)**
+**Respuesta: [E18-paridad-recursiva](../S01-recursividad/E18-paridad-recursiva.cpp)**
