@@ -49,7 +49,7 @@ u64 getCombinatorics(int n, int k) {
 
 
 int main() {
-	std::cout << "\n\e[0;35m[========= E01-COMBINATORIA =========]\e[0m\n\n";
+	std::cout << "\n\e[0;35m[========= E05-COMBINATORIA =========]\e[0m\n\n";
 
 	int n, k;
 
