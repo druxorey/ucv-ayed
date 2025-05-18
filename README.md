@@ -45,26 +45,6 @@ Para compilar y ejecutar un programa en c++ **desde la terminal**, sigue estos p
     ./programa-compilado
     ```
 
-## Cómo Ejecutar los Códigos
-
-Para compilar y ejecutar un programa en C++ **desde la terminal**, sigue estos pasos:
-
-> **NOTA:**
-> Si prefieres compilar y ejecutar los programas utilizando Code Runner, consulta la guía en el siguiente enlace: [Cómo usar Code Runner](https://example.com/code-runner-guide).
-
-1. Navega al directorio donde se encuentra el archivo `.cpp`.
-2. Compila el archivo con el siguiente comando:
-
-    ```bash
-    g++ nombre-del-archivo.cpp -o programa-compilado
-    ```
-
-3. Ejecuta el programa con el siguiente comando:
-
-    ```bash
-    ./programa-compilado
-    ```
-
 ## Explicaciones Generales del Codigo
 
 En los códigos proporcionados, es común encontrar secuencias de escape que cumplen funciones específicas. A continuación, se explican algunas de ellas:
