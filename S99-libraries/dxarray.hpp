@@ -8,10 +8,10 @@
 // La palabra clave inline sugiere al compilador que inserte el código de la función directamente donde se llama,
 // para reducir la sobrecarga de la llamada a la función (aunque depende del compilador si lo aplica o no)
 template <typename datatype>
-inline void printArray(datatype array[], int size) {
+inline void printArray(datatype array[], int size, std::string message = "\n\e[0;33mEl arreglo es: \e[0;34m[\e[0m") {
 
     // Imprime el inicio del arreglo con formato de color
-    std::cout << '\n' << "\e[0;33mEl arreglo es: \e[0;34m[\e[0m";
+    std::cout <<  message;
     for (int i = 0; i < size; i++) {
         std::cout << array[i];
 
