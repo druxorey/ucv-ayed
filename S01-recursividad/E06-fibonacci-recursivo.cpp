@@ -3,9 +3,9 @@
 #include "../S99-libraries/dxstd.hpp" // Biblioteca personalizada para funciones auxiliares
 
 // Define un alias para simplificar el uso de un tipo de dato entero sin signo de 64 bits
-typedef unsigned long long int ulli;
+typedef unsigned long long int u64;
 
-ulli getFibonnacci(ulli n, std::unordered_map<ulli, ulli>& memo) {
+u64 getFibonnacci(u64 n, std::unordered_map<u64, u64>& memo) {
 	// Caso base: si n es 0 o 1, devuelve n directamente
 	// Esto se debe a que los primeros dos números de la serie de Fibonacci son 0 y 1.
 	if (n <= 1) return n;
@@ -26,8 +26,8 @@ int main() {
 	std::cout << "\n\e[0;35m[========= E06-FIBONACCI-RECURSIVO =========]\e[0m\n\n";
 
 	// Declara las variables necesarias: número de entrada y el mapa para memoización
-	ulli number, fibonacci;
-	std::unordered_map<ulli, ulli> memo;
+	u64 number, fibonacci;
+	std::unordered_map<u64, u64> memo;
 
 	getcin("Ingrese un número: ", number);
 
