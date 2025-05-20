@@ -94,7 +94,7 @@ Un juego de dominó se considera “trancado” si las dos piezas que permiten a
 
 **Respuesta: [E09-domino-trancado](../S02-backtracking/E09-domino-trancado.cpp)**
 
-## **E10-caballo-de-ajedrez**
+## **E10-recorrido-del-caballo**
 
 Se desea que usted indique todas las formas en las cuales la pieza de caballo colocada en la esquina superior derecha de un tablero de ajedrez puede recorrerlo completo, sin pasar dos veces por el mismo lugar. Tenga en cuenta que el tablero de ajedrez es de tamaño 8x8, y el caballo se mueve en forma de “L”. Ahora, indique si el caballo puede recorrer el tablero sin pasar dos veces por el mismo lugar.
 
@@ -105,7 +105,7 @@ Se desea que usted indique todas las formas en las cuales la pieza de caballo co
 | `Tablero 8x8` | `Todas las rutas posibles`          |
 
 
-**Respuesta: [E10-caballo-de-ajedrez](../S02-backtracking/E10-caballo-de-ajedrez.cpp)**
+**Respuesta: [E10-recorrido-del-caballo](../S02-backtracking/E10-recorrido-del-caballo.cpp)**
 
 ## **E11-dilema-del-pastor**
 
