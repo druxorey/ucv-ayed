@@ -15,7 +15,7 @@ u64 getFactorial(u64 n) {
 	return n * getFactorial(n - 1);
 }
 
-int main(int argc, char *argv[]) {
+int main() {
 	std::cout << "\n\e[0;35m[========= E11-FACTORIAL-RECURSIVO =========]\e[0m\n\n";
 
 	short int number;
