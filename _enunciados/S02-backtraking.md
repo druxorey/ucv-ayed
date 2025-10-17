@@ -2,33 +2,33 @@
 
 ## **E01-definicion-de-backtraking**
 
-Defina con sus propias palabras el término “búsqueda exhaustiva” en un algoritmo de backtracking.
+Defina con sus propias palabras el término «búsqueda exhaustiva» en un algoritmo de backtracking.
 
-**Respuesta: [E01-definicion-de-backtraking](../S02-backtracking/E01-definicion-de-backtraking.cpp)**
+**Respuesta: [E01-definicion-de-backtraking](../S02-backtracking/E01-definicion-de-backtraking.md)**
 
 ## **E02-estados-backtracking**
 
 Explique brevemente los estados (variables y términos de alcance) creados en cada llamada recursiva en un algoritmo de backtracking.
 
-**Respuesta: [E02-estados-backtracking](../S02-backtracking/E02-estados-backtracking.cpp)**
+**Respuesta: [E02-estados-backtracking](../S02-backtracking/E02-estados-backtracking.md)**
 
 ## **E03-esquemas-backtracking**
 
 ¿Cuáles son los principales esquemas de solución utilizados en backtracking?
 
-**Respuesta: [E03-esquemas-backtracking](../S02-backtracking/E03-esquemas-backtracking.cpp)**
+**Respuesta: [E03-esquemas-backtracking](../S02-backtracking/E03-esquemas-backtracking.md)**
 
 ## **E04-solucion-backtracking**
 
 Indique (mediante la técnica de backtracking) cómo se puede saber si un problema determinado tiene solución o no.
 
-**Respuesta: [E04-solucion-backtracking](../S02-backtracking/E04-solucion-backtracking.cpp)**
+**Respuesta: [E04-solucion-backtracking](../S02-backtracking/E04-solucion-backtracking.md)**
 
 ## **E05-conjunto-soluciones**
 
 Indique (mediante la técnica de backtracking) cómo se puede determinar todo el conjunto de soluciones de un determinado problema. ¿Y la mejor solución?
 
-**Respuesta: [E05-conjunto-soluciones](../S02-backtracking/E05-conjunto-soluciones.cpp)**
+**Respuesta: [E05-conjunto-soluciones](../S02-backtracking/E05-conjunto-soluciones.md)**
 
 ## **E06-arreglo-de-permutaciones**
 
