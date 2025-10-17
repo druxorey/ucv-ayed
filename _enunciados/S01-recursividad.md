@@ -4,25 +4,25 @@
 
 Describa el concepto de recursividad. ¿Qué significan los niveles de recursividad?
 
-**Respuesta: [E01-concepto-recursividad](../S01-recursividad/E01-concepto-recursividad.cpp)**
+**Respuesta: [E01-concepto-recursividad](../S01-recursividad/E01-concepto-recursividad.md)**
 
 ## **E02-ventajas-desventajas**:
 
 Enumere brevemente las ventajas y desventajas de la recursividad.
 
-**Respuesta: [E02-ventajas-desventajas](../S01-recursividad/E02-ventajas-desventajas.cpp)**
+**Respuesta: [E02-ventajas-desventajas](../S01-recursividad/E02-ventajas-desventajas.md)**
 
 ## **E03-pilas-recursividad**:
 
 Explique brevemente el funcionamiento de las pilas de recursividad y los ambientes recursivos.
 
-**Respuesta: [E03-pilas-recursividad](../S01-recursividad/E03-pilas-recursividad.cpp)**
+**Respuesta: [E03-pilas-recursividad](../S01-recursividad/E03-pilas-recursividad.md)**
 
 ## **E04-solucion-iterativa**:
 
 ¿Existen casos donde una solución iterativa es mejor que una solución recursiva para un mismo problema?
 
-**Respuesta: [E04-solucion-iterativa](../S01-recursividad/E04-solucion-iterativa.cpp)**
+**Respuesta: [E04-solucion-iterativa](../S01-recursividad/E04-solucion-iterativa.md)**
 
 ## **E05-combinatoria**:
 
