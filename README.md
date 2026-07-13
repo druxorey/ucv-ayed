@@ -1,10 +1,5 @@
 <h1 align="center">Algoritmos y Estructuras de Datos</h1>
 
-<p align="center">
-<a href="#estructura-del-repositorio"><img src="https://img.shields.io/badge/estructura-BD93F9?style=for-the-badge"></a>
-<a href="#explicaciones-generales-del-codigo"><img src="https://img.shields.io/badge/explicaciones%20generales-BD93F9?style=for-the-badge"></a>
-</p>
-
 <p align="center">Respuestas a las guías de la materia de algoritmos y estructuras de datos en c++</p>
 
 ## Estructura del repositorio
@@ -25,12 +20,40 @@
 
 - **Ejercicios**: Dentro de cada directorio con el nombre correspondiente a la guía con los enunciados estarán los ejercicios enumerados y organizados según las guías.
 
+## ¿Cómo Descargar este Repositorio en tu Computadora?
+
+Si quieres tener los ejercicios en tu propia computadora para probarlos y modificarlos, puedes «clonar» este repositorio siguiendo estos pasos:
+
+### 1. Instalar Git
+
+Git es la herramienta que permite descargar proyectos desde GitHub.
+
+- Si aún no lo tienes, puedes descargarlo e instalarlo desde [git-scm.com](https://git-scm.com/).
+- Una vez instalado, abre tu terminal (o consola) y escribe `git --version` para confirmar que se instaló correctamente.
+
+### 2. Clonar el repositorio
+
+Para copiar este proyecto a tu computadora, sigue estos pasos:
+
+1. Abre la terminal en el lugar de tu computadora donde quieras guardar la carpeta del curso.
+2. Escribe el siguiente comando y presiona `Enter`:
+
+   ```bash
+   git clone https://github.com/druxorey/ucv-ayed.git
+   ```
+
+3. Esto creará una carpeta con todo el contenido. Entra en ella usando:
+
+   ```bash
+   cd ucv-ayed
+   ```
+
 ## Cómo ejecutar los códigos
 
 Para compilar y ejecutar un programa en c++ **desde la terminal**, sigue estos pasos:
 
 > **Nota:**
-> Si prefieres compilar y ejecutar los programas utilizando code runner, consulta la guía en el siguiente enlace: [cómo usar code runner](https://example.com/code-runner-guide).
+> Si prefieres compilar y ejecutar los programas utilizando Code Runner, consulta la guía en el siguiente enlace: [Cómo usar Code Runner](https://www.freecodecamp.org/news/how-to-write-and-run-c-cpp-code-on-visual-studio-code/).
 
 1. Navega al directorio donde se encuentra el archivo `.cpp`.
 2. Compila el archivo con el siguiente comando:
