@@ -1,45 +1,49 @@
-#include <iostream> // Biblioteca para entrada y salida estándar
-#include <unordered_map> // Biblioteca para usar mapas hash
-#include "../S99-libraries/dxstd.hpp" // Biblioteca personalizada para funciones auxiliares
+#include <iostream>
 
-// Define un alias para simplificar el uso de un tipo de dato entero sin signo de 64 bits
 typedef unsigned long long int u64;
 
-u64 getFibonnacci(u64 n, std::unordered_map<u64, u64>& memo) {
-	// Caso base: si n es 0 o 1, devuelve n directamente
-	// Esto se debe a que los primeros dos números de la serie de Fibonacci son 0 y 1.
-	if (n <= 1) return n;
+// Función recursiva con memoización para obtener el n-ésimo número de Fibonacci.
+// La recursión simple para Fibonacci tiene una complejidad de tiempo exponencial O(2^n) 
+// debido a la redundancia en el cálculo de los mismos subproblemas múltiples veces.
+// Mediante la técnica de Memoización (enfoque Top-Down de Programación Dinámica), 
+// guardamos los resultados ya computados en un arreglo auxiliar. Esto reduce la 
+// complejidad de tiempo a O(n) al calcular cada número de Fibonacci exactamente una vez.
+u64 getFibonacci(u64 n, u64 memo[]) {
+    // Caso base: F(0) = 0 y F(1) = 1. Estos valores no requieren cálculo
+    // y definen la condición de parada de la recursión.
+    if (n <= 1) return n;
 
-	// Verifica si el resultado ya está almacenado en el mapa de memoización.
-	// El mapa "memo" actúa como una caché para evitar cálculos repetidos.
-	// Si el valor de Fibonacci para "n" ya fue calculado, se devuelve directamente.
-	if (memo.find(n) != memo.end()) return memo[n];
+    // Búsqueda en caché: Si el valor de F(n) ya fue calculado previamente 
+    // (es decir, el elemento en el arreglo es diferente de 0), retornamos
+    // directamente el resultado en tiempo constante O(1), evitando llamadas recursivas adicionales.
+    if (memo[n] != 0) return memo[n];
 
-	// Si el resultado no está en el mapa, calcula el Fibonacci de forma recursiva.
-	// Llama a la función para calcular los valores de Fibonacci de "n-1" y "n-2".
-	// Luego, almacena el resultado en el mapa para futuras consultas.
-	// Esto optimiza el cálculo al evitar recalcular valores ya conocidos.
-	return memo[n] = getFibonnacci(n - 1, memo) + getFibonnacci(n - 2, memo);
+    // Caso recursivo con almacenamiento: Si F(n) no ha sido calculado, 
+    // resolvemos recursivamente para (n-1) y (n-2), y guardamos la suma en 'memo[n]' 
+    // antes de retornarlo para que esté disponible para futuras subconsultas.
+    memo[n] = getFibonacci(n - 1, memo) + getFibonacci(n - 2, memo);
+    return memo[n];
 }
 
+
 int main() {
-	std::cout << "\n\e[0;35m[========= E06-FIBONACCI-RECURSIVO =========]\e[0m\n\n";
+    std::cout << "\n\e[0;35m[========= E06-FIBONACCI-RECURSIVO =========]\e[0m\n\n";
 
-	// Declara las variables necesarias: número de entrada y el mapa para memoización
-	u64 number, fibonacci;
-	std::unordered_map<u64, u64> memo;
+    u64 number;
+    u64 memo[200] = {0}; // Arreglo de memoización inicializado en 0
 
-	getcin("Ingrese un número: ", number);
+    std::cout << "Ingrese un número: ";
+    if (!(std::cin >> number)) {
+        std::cerr << "\e[1;31m[ERROR]\e[0m Entrada inválida.\n\n";
+        return 1;
+    }
 
-	// Verifica si el número es demasiado grande para calcular su Fibonacci
-	// Puesto que por el tipo de dato utilizado (unsigned long long int), el límite es 18446744073709551615
-	if (number > 199) {
-		printf("\e[1;31m[ERROR]\e[0m El Fibonacci de %lld es demasiado grande para calcularse.\n\n", number);
-		return 1; // Termina el programa con un código de error
-	}
+    if (number > 199) {
+        printf("\e[1;31m[ERROR]\e[0m El Fibonacci de %lld es demasiado grande para calcularse.\n\n", number);
+        return 1;
+    }
 
-	// Calcula el Fibonacci del número ingresado y lo imprime con formato
-	printf("\e[1;32m[RESULTADO]\e[0m El Fibonacci de %lld es: %lld.\n\n", number, getFibonnacci(number, memo));
+    printf("\e[1;32m[RESULTADO]\e[0m El Fibonacci de %lld es: %lld.\n\n", number, getFibonacci(number, memo));
 
-	return 0; // Indica que el programa terminó correctamente
+    return 0;
 }

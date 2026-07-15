@@ -1,41 +1,48 @@
-#include <iostream> // Biblioteca para entrada y salida estándar
-#include "../S99-libraries/dxstd.hpp" // Biblioteca personalizada para funciones auxiliares
+#include <iostream>
 
-// Declaración de las funciones isOdd e isEven
-// Esto es necesario porque el compilador necesita conocer la existencia de estas funciones antes de que sean utilizadas.
-// La declaración permite que el compilador valide las llamadas a estas funciones antes de que se definan completamente.
-bool isOdd(int n); // Función que determina si un número es impar
-bool isEven(int n); // Función que determina si un número es par
+bool isOdd(int n);
+bool isEven(int n);
 
-// Definición de la función isOdd
-// Esta función utiliza recursión para determinar si un número es impar.
-// Si el número es 0, retorna false porque 0 no es impar.
-// En caso contrario, llama a la función isEven con el número reducido en 1.
+// Verifica recursivamente si un número es impar.
+// Concepto Teórico (Recursión Mutua / Cruzada):
+// Dos o más funciones se llaman mutuamente para resolver un problema de forma coordinada.
+// Inducción matemática de paridad:
+// - 0 no es impar (retorna false).
+// - Un número n es impar si y solo si n - 1 (o n + 1 si es negativo) es par.
 bool isOdd(int n) {
-	if (n == 0) return false; // Caso base: 0 no es impar
-	return isEven(n - 1); // Llamada recursiva: verifica si el número anterior es par
+    // Caso base: 0 es par por definición, por tanto no es impar. Retorna false.
+    if (n == 0) return false;
+
+    // Llamada recursiva mutua: Delegamos el problema a isEven reduciendo el valor absoluto en 1
+    // (restando 1 si es positivo, sumando 1 si es negativo) para converger hacia el caso base 0.
+    return isEven(n > 0 ? n - 1 : n + 1);
 }
 
-// Definición de la función isEven
-// Esta función utiliza recursión para determinar si un número es par.
-// Si el número es 0, retorna true porque 0 es par.
-// En caso contrario, llama a la función isOdd con el número reducido en 1.
+// Verifica recursivamente si un número es par.
+// Concepto Teórico (Recursión Mutua / Cruzada):
+// - 0 es par por definición (retorna true).
+// - Un número n es par si y solo si n - 1 (o n + 1 si es negativo) es impar.
 bool isEven(int n) {
-	if (n == 0) return true; // Caso base: 0 es par
-	return isOdd(n - 1); // Llamada recursiva: verifica si el número anterior es impar
+    // Caso base: 0 es par por definición. Retorna true.
+    if (n == 0) return true;
+
+    // Llamada recursiva mutua: Delegamos el problema a isOdd reduciendo el valor absoluto en 1
+    // para converger hacia el caso base 0.
+    return isOdd(n > 0 ? n - 1 : n + 1);
 }
 
 
 int main() {
-	std::cout << "\n\e[0;35m[========= E18-PARIDAD-RECURSIVA =========]\e[0m\n\n";
+    std::cout << "\n\e[0;35m[========= E18-PARIDAD-RECURSIVA =========]\e[0m\n\n";
 
-	int a = 0; // Variable para almacenar el número ingresado por el usuario
+    int a = 0;
+    std::cout << "Ingrese un número: ";
+    if (!(std::cin >> a)) {
+        std::cerr << "\e[1;31m[ERROR]\e[0m Entrada inválida.\n\n";
+        return 1;
+    }
 
-	// Solicita al usuario que ingrese un número
-	getcin("Ingrese el primer número: ", a);
+    printf("\e[1;32m[RESULTADO]\e[0m El número %d es %s.\n\n", a, isEven(a) ? "par" : "impar");
 
-	// Determina si el número ingresado es par o impar y muestra el resultado
-	printf("\e[1;32m[RESULTADO]\e[0m El número %d es %s.\n\n", a, isEven(a) ? "par" : "impar");
-
-	return 0; // Fin del programa
+    return 0;
 }

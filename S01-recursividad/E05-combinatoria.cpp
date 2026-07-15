@@ -1,67 +1,47 @@
-#include <iostream> // Biblioteca para entrada y salida estándar
-#include "../S99-libraries/dxstd.hpp" // Biblioteca personalizada para funciones auxiliares
+#include <iostream>
 
-// El typedef se utiliza para definir un nuevo nombre para un tipo de dato existente.
-// En este caso, se define 'u64' como un alias para 'unsigned long long int'.
+// Alias de tipo para enteros grandes sin signo
 typedef unsigned long long int u64;
 
-// Solución iterativa mejorada:
-// Esta función calcula la combinatoria (n sobre k) de manera iterativa.
-// Utiliza la propiedad de simetría dla combinatoria para reducir el número de multiplicaciones.
-// La fórmula utilizada es: C(n, k) = n! / (k! * (n-k)!)
-
-/*
+// Solución recursiva para calcular el coeficiente binomial C(n, k).
+// Este cálculo modela matemáticamente el número de formas de elegir k elementos
+// de un conjunto de n elementos sin importar el orden.
 u64 getCombinatorics(int n, int k) {
-	if (k > n) return -1; // Si k es mayor que n, no es posible calcular la combinatoria.
-	if (k == 0 || k == n) return 1; // Caso base: C(n, 0) = C(n, n) = 1.
+    // Casos base:
+    // 1. C(n, 0) = 1: Solo hay 1 forma de elegir 0 elementos (no elegir ninguno).
+    // 2. C(n, n) = 1: Solo hay 1 forma de elegir todos los n elementos (elegir el conjunto completo).
+    // Ambos casos representan las hojas del árbol de llamadas recursivas y detienen la recursión.
+    if (k == 0 || k == n) return 1;
 
-	u64 result = 1;
-	if (k > n - k) k = n - k; // Utiliza la simetría: C(n, k) = C(n, n-k).
-
-	for (int i = 0; i < k; ++i) {
-		result *= (n - i); // Multiplica por (n - i).
-		result /= (i + 1); // Divide por (i + 1).
-	}
-
-	return result; // Devuelve el resultado final.
-}
-*/
-
-// Solución recursiva:
-u64 getCombinatorics(int n, int k) {
-	// Esta función calcula la combinatoria C(n, k) utilizando una relación de recurrencia.
-	// La combinatoria representa el número de formas de elegir k elementos de un conjunto de n elementos.
-	// La relación de recurrencia utilizada es:
-	// C(n, k) = C(n-1, k-1) + C(n-1, k)
-	// Esto significa que para calcular C(n, k), sumamos:
-	// - El número de formas de elegir (k-1) elementos de (n-1) elementos.
-	// - El número de formas de elegir k elementos de (n-1) elementos.
-
-	// Caso base: Si k es 0 o k es igual a n, el resultado es 1.
-	// Esto se debe a que:
-	// - C(n, 0) = 1 (solo hay una forma de no elegir ningún elemento).
-	// - C(n, n) = 1 (solo hay una forma de elegir todos los elementos).
-	if (k == 0 || k == n) return 1;
-
-	// Llamada recursiva: Calcula la combinatoria sumando los dos casos anteriores.
-	return getCombinatorics(n - 1, k - 1) + getCombinatorics(n - 1, k);
+    // Relación de recurrencia (Identidad de Pascal):
+    // C(n, k) = C(n-1, k-1) + C(n-1, k)
+    // Concepto teórico: Para un elemento particular, podemos:
+    // a) Incluirlo: nos queda elegir k-1 elementos de los n-1 restantes -> C(n-1, k-1).
+    // b) Excluirlo: nos queda elegir k elementos de los n-1 restantes -> C(n-1, k).
+    // La suma de estas dos decisiones disjuntas cubre todas las posibilidades.
+    return getCombinatorics(n - 1, k - 1) + getCombinatorics(n - 1, k);
 }
 
 
 int main() {
-	std::cout << "\n\e[0;35m[========= E05-COMBINATORIA =========]\e[0m\n\n";
+    std::cout << "\n\e[0;35m[========= E05-COMBINATORIA =========]\e[0m\n\n";
 
-	int n, k;
+    int n, k;
 
-	// Solicita al usuario los valores de n y k.
-	getcin("Introduce el valor de n: ", n);
-	getcin("Introduce el valor de k: ", k);
+    std::cout << "Introduce el valor de n: ";
+    if (!(std::cin >> n)) return 1;
 
-	// Calcula la combinatoria.
-	u64 combinatorics = getCombinatorics(n, k);
+    std::cout << "Introduce el valor de k: ";
+    if (!(std::cin >> k)) return 1;
 
-	// Muestra el resultado formateado.
-	printf("\e[1;32m[RESULTADO]\e[0m la combinatoria de %d y %d es: %llu.\n\n", n, k, combinatorics);
+    if (k > n || n < 0 || k < 0) {
+        std::cerr << "\e[1;31m[ERROR]\e[0m Parámetros inválidos para combinatoria.\n\n";
+        return 1;
+    }
 
-	return 0;
+    u64 combinatorics = getCombinatorics(n, k);
+
+    printf("\n\e[1;32m[RESULTADO]\e[0m La combinatoria de %d y %d es: %llu.\n\n", n, k, combinatorics);
+
+    return 0;
 }
