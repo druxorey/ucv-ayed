@@ -5,13 +5,10 @@
 #include <ctime>
 #include <iostream>
 
-/**
- * @brief Celda individual de la Matriz Esparcida.
- * Representa un nodo que almacena únicamente los elementos con valores no nulos
- * en la matriz, guardando su fila, columna y valor correspondiente.
- *
- * @tparam T Tipo de dato de los elementos.
- */
+// Celda individual de la Matriz Esparcida.
+// Representa un nodo que almacena únicamente los elementos con valores no nulos
+// en la matriz, guardando su fila, columna y valor correspondiente.
+// T representa el tipo de dato de los elementos.
 template <typename T> class DrxSparseCell {
   public:
 	unsigned int row;    // Índice de fila.
@@ -23,13 +20,10 @@ template <typename T> class DrxSparseCell {
 	DrxSparseCell(unsigned int r, unsigned int c, T val) : row(r), column(c), value(val) {}
 };
 
-/**
- * @brief Representación de una Fila en la Matriz Esparcida.
- * Contiene una lista doblemente enlazada (`cells`) que guarda únicamente las
- * celdas activas de esa fila, ordenadas lógicamente.
- *
- * @tparam T Tipo de dato.
- */
+// Representación de una Fila en la Matriz Esparcida.
+// Contiene una lista doblemente enlazada (`cells`) que guarda únicamente las
+// celdas activas de esa fila, ordenadas lógicamente.
+// T representa el tipo de dato.
 template <typename T> class DrxSparseRow {
   public:
 	unsigned int index;              // Índice numérico de la fila.
@@ -39,32 +33,22 @@ template <typename T> class DrxSparseRow {
 	DrxSparseRow(unsigned int idx) : index(idx) {}
 };
 
-/**
- * @brief Estructura de Matriz Esparcida (Sparse Matrix).
- *
- * Una matriz esparcida es una matriz en la cual la gran mayoría de los
- * elementos son cero o nulos. Para evitar el desperdicio masivo de memoria de
- * una matriz estática (ej. 1000x1000), se almacena dinámicamente una lista de
- * filas, y dentro de cada fila, una lista de celdas activas. Las posiciones
- * vacías no consumen memoria y retornan un valor nulo de referencia.
- *
- * @tparam T Tipo de dato.
- */
+// Estructura de Matriz Esparcida (Sparse Matrix).
+// Una matriz esparcida es una matriz en la cual la gran mayoría de los
+// elementos son cero o nulos. Para evitar el desperdicio masivo de memoria de
+// una matriz estática (ej. 1000x1000), se almacena dinámicamente una lista de
+// filas, y dentro de cada fila, una lista de celdas activas. Las posiciones
+// vacías no consumen memoria y retornan un valor nulo de referencia.
+// T representa el tipo de dato.
 template <typename T> class DrxSparseMatrix {
   public:
-	/**
-	 * @brief Constructor: Inicializa la matriz definiendo el valor de retorno
-	 * nulo.
-	 * @param nullVal Valor por defecto retornado si una posición está vacía
-	 * (usualmente 0 o nullptr).
-	 */
+	// Constructor: Inicializa la matriz definiendo el valor de retorno nulo.
+	// nullVal: Valor por defecto retornado si una posición está vacía.
 	DrxSparseMatrix(T nullVal) : nullValue(nullVal) {}
 
-	/**
-	 * @brief Obtiene el valor en la fila y columna indicadas.
-	 * Busca la fila en O(R) y la celda correspondiente en O(C). Si no existe,
-	 * retorna el valor nulo.
-	 */
+	// Obtiene el valor en la fila y columna indicadas.
+	// Busca la fila en O(R) y la celda correspondiente en O(C). Si no existe,
+	// retorna el valor nulo.
 	T get(int rowIndex, int columnIndex) {
 		DrxSparseRow<T> *thisRow = getRow(rowIndex);
 		if (thisRow == nullptr) return nullValue;
@@ -75,35 +59,31 @@ template <typename T> class DrxSparseMatrix {
 		return thisCell->value;
 	}
 
-	/**
-	 * @brief Establece un valor en la fila y columna dadas.
-	 * Si la fila o la celda no existen, las crea dinámicamente y las enlaza a
-	 * la estructura.
-	 */
+	// Establece un valor en la fila y columna dadas.
+	// Si la fila o la celda no existen, las crea dinámicamente y las enlaza a
+	// la estructura.
 	void set(int rowIndex, int columnIndex, T value) {
 		DrxSparseRow<T> *thisRow = getRow(rowIndex);
 		if (thisRow == nullptr) {
 			DrxSparseRow<T> newRow(rowIndex);
-			rows.push_back(newRow);
-			typename DrxList<DrxSparseRow<T>>::iterator lastIt = rows.last();
+			rows.pushBack(newRow);
+			typename DrxList<DrxSparseRow<T>>::Iterator lastIt = rows.last();
 			thisRow = rows.get(lastIt);
 		}
 
 		DrxSparseCell<T> *thisCell = getCell(thisRow, columnIndex);
 		if (thisCell == nullptr) {
 			DrxSparseCell<T> newCell(rowIndex, columnIndex, nullValue);
-			thisRow->cells.push_back(newCell);
-			typename DrxList<DrxSparseCell<T>>::iterator lastCellIt = thisRow->cells.last();
+			thisRow->cells.pushBack(newCell);
+			typename DrxList<DrxSparseCell<T>>::Iterator lastCellIt = thisRow->cells.last();
 			thisCell = thisRow->cells.get(lastCellIt);
 		}
 
 		thisCell->value = value;
 	}
 
-	/**
-	 * @brief Llena la matriz de forma aleatoria con un número determinado de
-	 * elementos activos.
-	 */
+	// Llena la matriz de forma aleatoria con un número determinado de
+	// elementos activos.
 	void fill(int rCount, int cCount, int elements) {
 		srand(time(nullptr));
 		int maxElements = rCount * cCount;
@@ -123,10 +103,7 @@ template <typename T> class DrxSparseMatrix {
 		}
 	}
 
-	/**
-	 * @brief Imprime la matriz en consola mostrando los bordes y valores de
-	 * forma legible.
-	 */
+	// Imprime la matriz en consola mostrando los bordes y valores de forma legible.
 	void print(int rCount, int cCount) {
 		for (int i = 0; i < rCount; i++) {
 			std::cout << "\e[0;34m|\e[0m";
@@ -142,11 +119,9 @@ template <typename T> class DrxSparseMatrix {
 	T nullValue;                   // Valor retornado para las celdas vacías.
 	DrxList<DrxSparseRow<T>> rows; // Lista doblemente enlazada de filas.
 
-	/**
-	 * @brief Busca y retorna el puntero a la fila dada por índice.
-	 */
+	// Busca y retorna el puntero a la fila dada por índice.
 	DrxSparseRow<T> *getRow(int index) {
-		typename DrxList<DrxSparseRow<T>>::iterator it = rows.first();
+		typename DrxList<DrxSparseRow<T>>::Iterator it = rows.first();
 		while (it != rows.end()) {
 			DrxSparseRow<T> *r = rows.get(it);
 			if (r->index == index) return r;
@@ -155,12 +130,10 @@ template <typename T> class DrxSparseMatrix {
 		return nullptr;
 	}
 
-	/**
-	 * @brief Busca y retorna la celda dada por columna dentro de una fila.
-	 */
+	// Busca y retorna la celda dada por columna dentro de una fila.
 	DrxSparseCell<T> *getCell(DrxSparseRow<T> *row, int column) {
 		if (row == nullptr) return nullptr;
-		typename DrxList<DrxSparseCell<T>>::iterator it = row->cells.first();
+		typename DrxList<DrxSparseCell<T>>::Iterator it = row->cells.first();
 		while (it != row->cells.end()) {
 			DrxSparseCell<T> *cell = row->cells.get(it);
 			if (cell->column == column) return cell;
