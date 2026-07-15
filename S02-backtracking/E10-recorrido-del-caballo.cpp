@@ -1,15 +1,10 @@
-#include <iostream> // Biblioteca para entrada y salida estándar
-#include <string> // Biblioteca para manipulación de cadenas de texto
-#include <vector> // Biblioteca para uso de vectores
-
-// Definimos un alias para un vector de strings que representará los movimientos realizados
-typedef std::vector<std::string> squares;
+#include <iostream>
 
 // Tablero de ajedrez representado como una matriz de 8x8. Inicialmente, todas las posiciones están marcadas como no visitadas (false).
 bool chessBoard[8][8] = {false};
 
-// Función para imprimir el tablero de ajedrez y los movimientos realizados
-void printChessBoard(squares movesMade) {
+// Función para imprimir el tablero de ajedrez y los movimientos realizados.
+void printChessBoard(const int movesX[], const int movesY[], int movesMadeCount) {
 	// Imprime el estado actual del tablero
 	printf("\n\e[1;34m ESTADO FINAL DEL TABLERO\e[0m\n");
 	for (int row = 0; row < 8; row++) {
@@ -21,75 +16,93 @@ void printChessBoard(squares movesMade) {
 
 	// Imprime los movimientos realizados por el caballo
 	printf("\n\n\e[1;32m[MOVIMIENTOS REALIZADOS]\e[0m [ ");
-	for (int i = 0; i < movesMade.size(); i++) {
-		std::cout << movesMade[i] << " "; // Imprime cada movimiento en formato de coordenadas
+	for (int i = 0; i < movesMadeCount; i++) {
+		char column = 'A' + movesX[i]; // Calcula la columna
+		char row = '8' - movesY[i];    // Calcula la fila
+		std::cout << column << row << " ";
 	}
 	printf("]\n\n");
 }
 
-// Función para verificar si un movimiento es válido
+
+// Función para verificar si un movimiento es válido.
+// Concepto Teórico (Restricción de Límites y Estado):
+// Un paso es viable si y solo si cae dentro de las coordenadas físicas del tablero de ajedrez (8x8)
+// y si la casilla destino no ha sido previamente visitada en la ruta actual.
 bool isMoveValid(int xPosition, int yPosition) {
-	// Verifica que las coordenadas estén dentro del tablero y que la casilla no haya sido visitada
 	if (xPosition >= 0 && xPosition < 8 && yPosition >= 0 && yPosition < 8 && !chessBoard[yPosition][xPosition]) {
 		return true;
 	}
 	return false;
 }
 
-// Convierte una posición en coordenadas (x, y) a una representación en notación de ajedrez (e.g., "A1")
-std::string positionToString(int xPosition, int yPosition) {
-	char column = 'A' + xPosition; // Calcula la columna en base a la posición x
-	char row = '8' - yPosition;	// Calcula la fila en base a la posición y
-	return std::string(1, column) + std::string(1, row); // Retorna la posición como string
-}
 
-// Función recursiva para encontrar el recorrido del caballo
-bool findKnightTour(int xPosition, int yPosition, squares &movesMade) {
-	// Caso base: si se han realizado 64 movimientos, el recorrido está completo
-	if (movesMade.size() == 64) {
+// Función recursiva para encontrar el recorrido del caballo (Knight's Tour) usando Backtracking.
+// Concepto Teórico (Camino Hamiltoniano en un Grafo de Rejilla):
+// El objetivo es encontrar una secuencia de movimientos legales para que el caballo visite cada una de las 
+// 64 casillas del tablero exactamente una vez. Representa una búsqueda en profundidad (DFS) en el espacio de estados.
+bool findKnightTour(int xPosition, int yPosition, int movesX[], int movesY[], int &movesMadeCount) {
+	// Caso base: Si la cantidad de movimientos es 64, significa que hemos visitado
+	// todas las casillas del tablero (8x8 = 64) exactamente una vez. Hemos encontrado
+	// un recorrido completo exitoso.
+	if (movesMadeCount == 64) {
 		printf("\n\e[1;32m[RESULTADO]\e[0m El caballo ha completado el recorrido.\n");
-		printChessBoard(movesMade); // Imprime el tablero y los movimientos realizados
+		printChessBoard(movesX, movesY, movesMadeCount); 
 		return true;
 	}
 
-	// Verifica si el movimiento actual es válido
+	// Si el movimiento planteado a esta casilla es válido, intentamos avanzar por esta rama
 	if (isMoveValid(xPosition, yPosition)) {
-		chessBoard[yPosition][xPosition] = true; // Marca la casilla como visitada
-		movesMade.push_back(positionToString(xPosition, yPosition)); // Agrega el movimiento a la lista
+		// 1. Tomar decisión: Marcar la casilla como visitada en la matriz global
+		//    y registrar la coordenada en el historial de movimientos.
+		chessBoard[yPosition][xPosition] = true; 
+		movesX[movesMadeCount] = xPosition;
+		movesY[movesMadeCount] = yPosition;
+		movesMadeCount++;
 
-		// Intenta realizar los movimientos posibles del caballo
-		// Movimiento 1: Dos pasos hacia la derecha y uno hacia arriba
-		if (findKnightTour(xPosition + 2, yPosition + 1, movesMade)) return true;
-		// Movimiento 2: Dos pasos hacia la derecha y uno hacia abajo
-		if (findKnightTour(xPosition + 2, yPosition - 1, movesMade)) return true;
-		// Movimiento 3: Dos pasos hacia la izquierda y uno hacia arriba
-		if (findKnightTour(xPosition - 2, yPosition + 1, movesMade)) return true;
-		// Movimiento 4: Dos pasos hacia la izquierda y uno hacia abajo
-		if (findKnightTour(xPosition - 2, yPosition - 1, movesMade)) return true;
-		// Movimiento 5: Un paso hacia la derecha y dos hacia arriba
-		if (findKnightTour(xPosition + 1, yPosition + 2, movesMade)) return true;
-		// Movimiento 6: Un paso hacia la derecha y dos hacia abajo
-		if (findKnightTour(xPosition + 1, yPosition - 2, movesMade)) return true;
-		// Movimiento 7: Un paso hacia la izquierda y dos hacia arriba
-		if (findKnightTour(xPosition - 1, yPosition + 2, movesMade)) return true;
-		// Movimiento 8: Un paso hacia la izquierda y dos hacia abajo
-		if (findKnightTour(xPosition - 1, yPosition - 2, movesMade)) return true;
+		// 2. Exploración recursiva:
+		// Un caballo de ajedrez tiene hasta 8 movimientos posibles en forma de "L".
+		// Intentamos cada uno de ellos en secuencia. Si alguno de ellos tiene éxito en completar
+		// el recorrido (retorna true), propagamos ese éxito retornando true inmediatamente (poda de búsqueda).
+		
+		// Movimiento 1: Dos pasos a la derecha, uno arriba
+		if (findKnightTour(xPosition + 2, yPosition + 1, movesX, movesY, movesMadeCount)) return true;
+		// Movimiento 2: Dos pasos a la derecha, uno abajo
+		if (findKnightTour(xPosition + 2, yPosition - 1, movesX, movesY, movesMadeCount)) return true;
+		// Movimiento 3: Dos pasos a la izquierda, uno arriba
+		if (findKnightTour(xPosition - 2, yPosition + 1, movesX, movesY, movesMadeCount)) return true;
+		// Movimiento 4: Dos pasos a la izquierda, uno abajo
+		if (findKnightTour(xPosition - 2, yPosition - 1, movesX, movesY, movesMadeCount)) return true;
+		// Movimiento 5: Un paso a la derecha, dos arriba
+		if (findKnightTour(xPosition + 1, yPosition + 2, movesX, movesY, movesMadeCount)) return true;
+		// Movimiento 6: Un paso a la derecha, dos abajo
+		if (findKnightTour(xPosition + 1, yPosition - 2, movesX, movesY, movesMadeCount)) return true;
+		// Movimiento 7: Un paso a la izquierda, dos arriba
+		if (findKnightTour(xPosition - 1, yPosition + 2, movesX, movesY, movesMadeCount)) return true;
+		// Movimiento 8: Un paso a la izquierda, dos abajo
+		if (findKnightTour(xPosition - 1, yPosition - 2, movesX, movesY, movesMadeCount)) return true;
 
-		// Si ninguno de los movimientos funciona, retrocede (backtracking)
-		chessBoard[yPosition][xPosition] = false; // Desmarca la casilla
-		movesMade.pop_back(); // Elimina el último movimiento de la lista
+		// 3. Deshacer decisión (Backtracking):
+		// Si llegamos a esta línea, significa que ninguno de los 8 movimientos posibles desde la casilla
+		// actual nos condujo a una solución completa (camino sin salida). 
+		// Desmarcamos esta casilla como visitada y decrementamos el contador de movimientos. 
+		// De esta forma, dejamos el tablero intacto para que otros caminos alternativos puedan usar esta casilla.
+		chessBoard[yPosition][xPosition] = false; 
+		movesMadeCount--;
 	}
 
-	return false; // Retorna false si no se puede completar el recorrido desde esta posición
+	return false; // Retorna false informando al nivel anterior que este camino no tuvo éxito.
 }
 
 
 int main() {
 	std::cout << "\n\e[1;35m[========= E10-RECORRIDO-DEL-CABALLO =========]\e[0m\n\n";
 
-	squares movesMade; // Lista para almacenar los movimientos realizados
+	int movesX[64] = {0};
+	int movesY[64] = {0};
+	int movesMadeCount = 0;
 
-	if (!findKnightTour(7, 0, movesMade)) { // Inicia el recorrido desde la posición inicial (H1)
+	if (!findKnightTour(7, 0, movesX, movesY, movesMadeCount)) { // Inicia el recorrido desde la posición inicial (H1)
 		// Mensaje de error si no se puede completar el recorrido
 		printf("\n\e[1;31m[ERROR]\e[0m No se pudo completar el recorrido del caballo.\n");
 	}

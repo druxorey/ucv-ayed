@@ -1,101 +1,133 @@
-#include <iostream> // Biblioteca para entrada y salida estándar
-#include <string>   // Biblioteca para manipulación de strings
-#include "../S99-libraries/dxstd.hpp" // Biblioteca personalizada para funciones auxiliares
-#include "../S99-libraries/dxmatrix.hpp" // Biblioteca personalizada para operaciones con arreglos
+#include <iostream>
 
-// Función para generar un laberinto aleatorio
+// Generador congruencial lineal simple para obtener números pseudoaleatorios sin usar cstdlib.
+unsigned int nextRandom() {
+    static unsigned int seed = 987654321;
+    seed = seed * 1103515245 + 12345;
+    return (seed / 65536) % 100;
+}
+
+
+// Imprime el estado del laberinto en la consola con colores.
+void printMatrix(int** matrix, int mazeSize) {
+    for (int i = 0; i < mazeSize; i++) {
+        std::cout << "\e[0;34m|\e[0m";
+        for (int j = 0; j < mazeSize; j++) {
+            int val = matrix[i][j];
+            if (val == 2) {
+                std::cout << " \e[1;32mX\e[0m \e[0;34m|\e[0m";
+            } else if (val == 1) {
+                std::cout << " \e[1;31m#\e[0m \e[0;34m|\e[0m";
+            } else {
+                std::cout << "   \e[0;34m|\e[0m";
+            }
+        }
+        std::cout << '\n';
+    }
+}
+
+
+// Genera obstáculos aleatorios en el laberinto.
 void generateMaze(int** mazeGrid, int mazeSize) {
-	// Itera por cada celda del laberinto
-	for (int row = 0; row < mazeSize; row++) {
-		for (int col = 0; col < mazeSize; col++) {
-			// Genera un obstáculo (1) con una probabilidad del 25%, de lo contrario, deja el espacio vacío (0)
-			if ((rand() % 100) <= 25) mazeGrid[row][col] = 1;
-			else mazeGrid[row][col] = 0;
-		}
-	}
-
-	// Asegura que la celda inicial y la celda final estén libres de obstáculos
-	mazeGrid[0][0] = 0;
-	mazeGrid[mazeSize-1][mazeSize-1] = 0;
+    for (int row = 0; row < mazeSize; row++) {
+        for (int col = 0; col < mazeSize; col++) {
+            if (nextRandom() <= 25) mazeGrid[row][col] = 1;
+            else mazeGrid[row][col] = 0;
+        }
+    }
+    // Asegurar que la entrada y la salida estén limpias
+    mazeGrid[0][0] = 0;
+    mazeGrid[mazeSize - 1][mazeSize - 1] = 0;
 }
 
-// Función para verificar si una celda es válida para moverse
+
+// Verifica si la celda es transitable y está dentro de los límites.
+// Concepto Teórico (Restricción Física y Estado de Celda):
+// Una celda es válida si se encuentra dentro de los límites de la matriz (0 a mazeSize-1)
+// y está vacía/disponible (valor 0). Si es un muro (valor 1) o ya pertenece al camino actual 
+// (valor 2), se descarta para evitar colisiones y bucles infinitos.
 bool isCellValid(int** mazeGrid, int mazeSize, int row, int col) {
-	// Verifica si la celda está dentro de los límites del laberinto
-	if (row < 0 || col < 0 || row >= mazeSize || col >= mazeSize) return false;
-
-	// Verifica si la celda no es un obstáculo (1)
-	if (mazeGrid[row][col]) return false;
-
-	// La celda es válida si pasa las verificaciones anteriores
-	return true;
+    if (row < 0 || col < 0 || row >= mazeSize || col >= mazeSize) return false;
+    if (mazeGrid[row][col] != 0) return false; // Solo transitable si es 0 (limpio y no visitado)
+    return true;
 }
 
-// Función recursiva para encontrar un camino en el laberinto
+
+// Algoritmo de backtracking para la búsqueda de un camino en el laberinto.
+// Concepto Teórico (Búsqueda en Rejillas Bidimensionales):
+// Buscamos un camino continuo desde la entrada (0,0) hasta la salida (N-1, N-1). 
+// Al entrar a una celda válida, la marcamos temporalmente como parte de la ruta (valor 2)
+// y exploramos sus 4 vecinas (Abajo, Derecha, Arriba, Izquierda). Si todas fallan, 
+// restauramos su estado original (valor 0) para permitir que otras rutas la utilicen.
 bool findMazePath(int** mazeGrid, int mazeSize, int row = 0, int col = 0) {
-	// Caso base: si se llega a la celda final, se encontró un camino
-	if (row == mazeSize-1 && col == mazeSize-1) {
-		mazeGrid[row][col] = 2; // Marca la celda como parte del camino
-		printf("\n\e[1;32m[RESULTADO]\e[0m ¡Se encontró un camino en el laberinto!\n\n");
-		printMatrix(mazeGrid, mazeSize); // Imprime el laberinto con el camino encontrado
-		printf("\n");
-		return true;
-	}
+    // Caso base: Llegamos a la esquina inferior derecha (meta). 
+    // Marcamos la celda final como parte de la ruta, imprimimos el laberinto resuelto y retornamos éxito.
+    if (row == mazeSize - 1 && col == mazeSize - 1) {
+        mazeGrid[row][col] = 2;
+        printf("\n\e[1;32m[RESULTADO]\e[0m ¡Se encontró un camino en el laberinto!\n\n");
+        printMatrix(mazeGrid, mazeSize);
+        printf("\n");
+        return true;
+    }
 
-	// Verifica si la celda actual es válida para moverse
-	if (isCellValid(mazeGrid, mazeSize, row, col)) {
-		printf("\e[1;33m[INFO]\e[0m Explorando celda (%d, %d)\n", row, col);
-		mazeGrid[row][col] = 2; // Marca la celda como parte del camino
+    // Si la celda es válida, intentamos explorar desde ella
+    if (isCellValid(mazeGrid, mazeSize, row, col)) {
+        printf("\e[1;33m[INFO]\e[0m Explorando celda (%d, %d)\n", row, col);
+        
+        // 1. Tomar decisión: Marcar la celda actual como parte de la ruta activa (valor 2).
+        //    Esto también actúa como "visitado", impidiendo que las llamadas hijas vuelvan a entrar aquí.
+        mazeGrid[row][col] = 2;
 
-		// Intenta moverse en las cuatro direcciones posibles
-		if (findMazePath(mazeGrid, mazeSize, row+1, col)) return true; // Abajo
-		if (findMazePath(mazeGrid, mazeSize, row, col+1)) return true; // Derecha
-		if (findMazePath(mazeGrid, mazeSize, row-1, col)) return true; // Arriba
-		if (findMazePath(mazeGrid, mazeSize, row, col-1)) return true; // Izquierda
+        // 2. Exploración recursiva en 4 direcciones (DFS):
+        // Abajo
+        if (findMazePath(mazeGrid, mazeSize, row + 1, col)) return true;
+        // Derecha
+        if (findMazePath(mazeGrid, mazeSize, row, col + 1)) return true;
+        // Arriba
+        if (findMazePath(mazeGrid, mazeSize, row - 1, col)) return true;
+        // Izquierda
+        if (findMazePath(mazeGrid, mazeSize, row, col - 1)) return true;
 
-		// Si ninguna dirección es válida, retrocede y desmarca la celda
-		mazeGrid[row][col] = 0;
-	}
+        // 3. Deshacer decisión (Backtracking):
+        // Si ninguna dirección fue exitosa, esta celda es un callejón sin salida.
+        // La desmarcamos devolviéndole su estado inicial (valor 0) antes de retornar false.
+        mazeGrid[row][col] = 0; 
+    }
 
-	// Mensaje de retroceso al no encontrar un camino desde la celda actual
-	printf("\e[1;31m[INFO]\e[0m Retrocediendo desde la celda (%d, %d)\n", row, col);
-	return false;
+    printf("\e[1;31m[INFO]\e[0m Retrocediendo desde la celda (%d, %d)\n", row, col);
+    return false; // Notificar al nivel anterior que esta ruta no tiene salida
 }
+
 
 int main() {
-	std::cout << "\n\e[1;35m[========= E12-CAMINO-DEL-LABERINTO =========]\e[0m\n\n";
+    std::cout << "\n\e[0;35m[========= E12-CAMINO-DEL-LABERINTO =========]\e[0m\n\n";
 
-	int mazeSize; // Tamaño del laberinto
-	srand(time(NULL)); // Inicializa la semilla para la generación aleatoria
+    int mazeSize;
+    std::cout << "Ingresa el tamaño del laberinto: ";
+    if (!(std::cin >> mazeSize) || mazeSize <= 0) {
+        std::cerr << "\e[1;31m[ERROR]\e[0m El tamaño debe ser mayor que cero y válido.\n\n";
+        return 1;
+    }
 
-	// Solicita al usuario el tamaño del laberinto
-	getcin("Ingresa el tamaño del laberinto: ", mazeSize);
+    int** mazeGrid = new int*[mazeSize];
+    for (int i = 0; i < mazeSize; i++) {
+        mazeGrid[i] = new int[mazeSize];
+    }
 
-	// Crea una matriz dinámica para representar el laberinto
-	int** maze = new int*[mazeSize];
-	for (int row = 0; row < mazeSize; row++) {
-		maze[row] = new int[mazeSize];
-	}
+    generateMaze(mazeGrid, mazeSize);
 
-	// Genera el laberinto aleatorio
-	generateMaze(maze, mazeSize);
+    std::cout << "\nLaberinto inicial:\n";
+    printMatrix(mazeGrid, mazeSize);
+    std::cout << "\n";
 
-	// Imprime el laberinto inicial
-	printf("\nLaberinto inicial generado:\n\n");
-	printMatrix(maze, mazeSize);
-	printf("\n");
+    if (!findMazePath(mazeGrid, mazeSize)) {
+        printf("\e[1;31m[RESULTADO]\e[0m No hay un camino disponible para salir del laberinto.\n\n");
+    }
 
-	// Intenta encontrar un camino en el laberinto
-	if (!findMazePath(maze, mazeSize)) {
-		// Mensaje si no se encuentra un camino
-		printf("\n\e[1;31m[ERROR]\e[0m No existe un camino en el laberinto.\n\n");
-	}
+    for (int i = 0; i < mazeSize; i++) {
+        delete[] mazeGrid[i];
+    }
+    delete[] mazeGrid;
 
-	// Libera la memoria asignada para el laberinto
-	for (int row = 0; row < mazeSize; row++) {
-		delete[] maze[row];
-	}
-	delete[] maze;
-
-	return 0; // Fin del programa
+    return 0;
 }
