@@ -1,8 +1,11 @@
-# E02 - Estados en Backtracking
+<h1 align="center">E02 - Estados en Backtracking</h1>
 
-> **TLDR**: En backtracking cada llamada recursiva crea un **estado** o ambiente temporal. Este estado es como una foto instantánea que guarda las **variables locales** de la decisión actual «ejemplo: probar el camino a la derecha». También tiene acceso a los **parámetros** que representan la solución construida hasta ahora «el camino recorrido». Al retroceder o hacer backtrack este estado se destruye por completo permitiendo explorar una nueva opción sin dejar rastros.
+> [!TLDR]
+> Cada llamada recursiva crea un **estado** aislado con sus variables locales (decisión actual) y parámetros (historial). Al hacer backtrack, ese estado se destruye completamente y el anterior queda intacto.
 
----
+## Enunciado
+
+Explique brevemente los estados (variables y términos de alcance) creados en cada llamada recursiva en un algoritmo de backtracking.
 
 ## Estados y Alcance en Backtracking
 
