@@ -4,7 +4,7 @@
 
 ## Estructura del repositorio
 
-- **_enunciados**: Este directorio contiene las guías resueltas en formato markdown.
+- **S00-enunciados**: Este directorio contiene las guías resueltas en formato markdown.
 
     - [S01-recursividad](./_enunciados/S01-recursividad.md)
     - [S02-backtraking](./_enunciados/S02-backtraking.md)
@@ -16,7 +16,7 @@
     - [S08-arboles-generales-y-binarios](./_enunciados/s08-arboles-generales-y-binarios.md)
     - [S09-monticulos](./_enunciados/s09-monticulos.md)
 
-- **S99-libraries**: Este directorio contiene headers con funciones y clases generales que pueden ser utilizadas en varios ejercicios.
+- **S99-implementaciones**: Este directorio contiene headers con funciones y clases generales que pueden ser utilizadas en varios ejercicios.
 
 - **Ejercicios**: Dentro de cada directorio con el nombre correspondiente a la guía con los enunciados estarán los ejercicios enumerados y organizados según las guías.
 
